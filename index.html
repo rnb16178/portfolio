@@ -1,1 +1,23 @@
-this is the homepage
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Frame Price Estimator</title>
+</head>
+<div style="color:black;">
+<h1 style="color:black;">Frame Price Estimator</h1>
+<form action="price.php" method="post" style="color:black">
+    <p>Frame of size <input type="number" min="0" max="100" name="width"> x <input type="text" name="height">
+    <select name="units">
+        <option value="mm">mm<br>
+        <option value="cm">cm<br>
+        <option value="inch">inch<br>
+    </select></p>
+    <p>Postage: <input type="radio" name="postage" value="standard" checked>standard
+        <input type="radio" name="postage" value="rapid"> rapid</p>
+    <p>Email: <input type="text" name="email"></p>
+    <p><input type="submit" value="submit"></p>
+</form>
+</div>
+</body>
+</html> 
