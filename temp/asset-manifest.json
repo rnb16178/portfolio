@@ -5,7 +5,7 @@
     "main.js.map": "/static/js/main.b6ba9c8a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.cacc4784.js",
     "runtime-main.js.map": "/static/js/runtime-main.cacc4784.js.map",
-    "static/js/2.c0039a79.chunk.js": "/static/js/2.c0039a79.chunk.js",
+    "static/js/2.c0039a79.chunk.js": "./static/js/2.c0039a79.chunk.js",
     "static/js/2.c0039a79.chunk.js.map": "/static/js/2.c0039a79.chunk.js.map",
     "static/js/3.5379ea9d.chunk.js": "/static/js/3.5379ea9d.chunk.js",
     "static/js/3.5379ea9d.chunk.js.map": "/static/js/3.5379ea9d.chunk.js.map",
