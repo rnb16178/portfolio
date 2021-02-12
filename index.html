@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="index.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
   html,
@@ -24,22 +25,45 @@
   <!-- Page Container -->
   <div class="w3-content w3-margin-top" style="max-width:1600px;">
     <div class="w3-content w3-margin-top w3-blue w3-center w3-text-white w3-card-4" style="max-width:1600px;">
-      <h1><a class=" fa fa-home w3-left w3-margin-left " href="index.html"> </a> Ross McMillan - Front End Developer</h1>
+      <h1><a class=" fa fa-home w3-left w3-margin-left " href="index.html"> </a> Ross McMillan - Front End Developer
+      </h1>
     </div>
+    <div class="w3-white w3-text-grey w3-card-4 ">
+  
 
-   
-   
-    <br>
-    <div class="w3-content" style="max-width:400px">
-      <div class="portfolioSlideshow w3-container w3-blue">
-        <h1><b>Johnstone Scout Group Website</b></h1>
+
+    <div class="slideshow-container w3-card-4 w3-blue ">
+      <div class="w3-center"><h1>Portfolio of Work</h1></div>
+      
+
+      <div class="mySlides fade w3-container w3-blue w3-center">
+        <div class="numbertext">1 / 3</div>
+        <a href="appointment.html">
+          <h1>Appointment App</h1>
+        </a>
+        <p>Application that allows users to view, book and edit Appointments</p>
       </div>
 
-      <div class="portfolioSlideshow w3-container w3-blue">
-        <h1><b>Appointment organiser</b></h1>
+      <div class="mySlides fade w3-container w3-blue w3-center">
+        <a href="jsg/index.html"></ahref><h1>Johnstone Scout Group Website</h1></a>
+          <p>Sample website for Johnstone Scout Group</p>
       </div>
-    
-    
+
+      <div class="mySlides fade w3-container w3-blue">
+        <div class="numbertext">3 / 3</div>
+        <div class="text">Caption Three</div>
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+
+
+      <div class="w3-blue" style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
     </div>
 
     <div class="w3-container w3-blue w3-center w3-margin-top w3-card-4">
@@ -56,46 +80,33 @@
   </div>
 
   <script>
-    var slideIndex = 0;
-    carousel();
-    
-    function carousel() {
-      var i;
-      var x = document.getElementsByClassName("portfolioSlideshow");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none"; 
-      }
-      slideIndex++;
-      if (slideIndex > x.length) {slideIndex = 1} 
-      x[slideIndex-1].style.display = "block"; 
-      setTimeout(carousel, 2000); 
-    }
     var slideIndex = 1;
-showDivs(slideIndex);
+    showSlides(slideIndex);
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
 
-function currentDiv(n) {
-  showDivs(slideIndex = n);
-}
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
 
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" w3-white", "");
-  }
-  x[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " w3-white";
-}
-    </script>
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    }
+  </script>
 </body>
+
 </html>
