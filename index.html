@@ -21,16 +21,26 @@
 </style>
 
 <body class="w3-light-grey">
-
-
   <!-- Page Container -->
   <div class="w3-content w3-margin-top" style="max-width:1600px;">
     <div class="w3-content w3-margin-top w3-blue w3-center w3-text-white w3-card-4" style="max-width:1600px;">
-
-      <h1><a class=" fa fa-home w3-left w3-margin-left " href="index.html"> </a> Ross McMillan - Front End Developer
-      </h1>
+      <h1><a class=" fa fa-home w3-left w3-margin-left " href="index.html"> </a> Ross McMillan - Front End Developer</h1>
     </div>
 
+   
+   
+    <br>
+    <div class="w3-content" style="max-width:400px">
+      <div class="portfolioSlideshow w3-container w3-blue">
+        <h1><b>Johnstone Scout Group Website</b></h1>
+      </div>
+
+      <div class="portfolioSlideshow w3-container w3-blue">
+        <h1><b>Appointment organiser</b></h1>
+      </div>
+    
+    
+    </div>
 
     <div class="w3-container w3-blue w3-center w3-margin-top w3-card-4">
       <p>Find me on social media.</p>
@@ -45,8 +55,47 @@
     <!-- End Page Container -->
   </div>
 
+  <script>
+    var slideIndex = 0;
+    carousel();
+    
+    function carousel() {
+      var i;
+      var x = document.getElementsByClassName("portfolioSlideshow");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none"; 
+      }
+      slideIndex++;
+      if (slideIndex > x.length) {slideIndex = 1} 
+      x[slideIndex-1].style.display = "block"; 
+      setTimeout(carousel, 2000); 
+    }
+    var slideIndex = 1;
+showDivs(slideIndex);
 
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
 
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" w3-white", "");
+  }
+  x[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " w3-white";
+}
+    </script>
 </body>
-
 </html>
