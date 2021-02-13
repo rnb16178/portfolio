@@ -24,43 +24,46 @@
     h6 {
         font-family: "Roboto", sans-serif
     }
+
     #chartdiv {
-            width: 100%;
-            height: 500px;
-        }
-        #gendiv {
-            width: 100%;
-            height: 500px;
-        }
+        width: 100%;
+        height: 500px;
+    }
+
+    #gendiv {
+        width: 100%;
+        height: 500px;
+    }
 </style>
 
 <body>
     <div class="w3-container  w3-center w3-margin-top w3-card-4">
-    <h1>Data Visualisation Examples</h1>
+        <h1>Data Visualisation Examples</h1>
     </div>
     <div class="w3-container  w3-center w3-margin-top w3-card-4">
         <h1 class="w3-blue">Numbers of Young people in each section</h1>
         <div id="chartdiv">
-    
-    
-    
+
+
+
         </div>
-        </div>
+    </div>
     <div class="w3-container  w3-center w3-margin-top w3-card-4">
-        <h1  id= "genderTitle" class="w3-blue">Numbers of Young people Beavers </h1>
+        <h1 id="genderTitle" class="w3-blue">Numbers of Young people Beavers </h1>
 
         <div class=" " id="gendiv"></div>
         <div class="w3-blue">
-        <select id="section" name="section">
-            <option value="Beavers">Beavers</option>
-            <option value="Cubs">Cubs</option>
-            <option value="Scouts">Scouts</option>
-            <option value="Explorers">Explorers</option>
-            <option value="Network">Network</option>
-        </select>
-        <button id="sectionChange" onclick="changeSection()">update</button></div>
+            <select id="section" name="section">
+                <option value="Beavers">Beavers</option>
+                <option value="Cubs">Cubs</option>
+                <option value="Scouts">Scouts</option>
+                <option value="Explorers">Explorers</option>
+                <option value="Network">Network</option>
+            </select>
+            <button id="sectionChange" onclick="changeSection()">update</button>
         </div>
-        
+    </div>
+
     </div>
     <!-- Styles -->
     <style>
@@ -77,15 +80,14 @@
 
     <!-- Chart code -->
     <script>
-        var chart
         am4core.ready(function () {
 
             // Themes begin
             am4core.useTheme(am4themes_animated);
             // Themes end
             changeSection();
-
-            var data = [{
+            var chart = am4core.create("chartdiv", am4charts.PieChart);
+            chart.data = [{
                 "section": "Beavers",
                 "total": 127030,
                 "color": am4core.color("#006ddf"),
@@ -103,82 +105,36 @@
                 "section": "Explorers",
                 "total": 45907,
                 "color": am4core.color("#003982"),
- 
+
             }, {
                 "section": "Network",
                 "total": 16501,
                 "color": am4core.color("#000000"),
 
-
             }];
 
-
-            // cointainer to hold both charts
-            var container = am4core.create("chartdiv", am4core.Container);
-            container.width = am4core.percent(100);
-            container.height = am4core.percent(100);
-            container.layout = "horizontal";
-
-            container.events.on("maxsizechanged", function () {
-                chart1.zIndex = 0;
-            })
-
-            var chart1 = container.createChild(am4charts.PieChart);
-            chart1.fontSize = 11;
-            chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-            chart1.data = data;
-            chart1.radius = am4core.percent(70);
-            chart1.innerRadius = am4core.percent(40);
-            chart1.zIndex = 1;
-
-            var series1 = chart1.series.push(new am4charts.PieSeries());
-            series1.dataFields.value = "total";
-            series1.dataFields.category = "section";
-            series1.colors.step = 2;
-            series1.alignLabels = false;
-            series1.labels.template.bent = true;
-            series1.labels.template.radius = 3;
-            series1.labels.template.padding(0, 0, 0, 0);
-
-            var sliceTemplate1 = series1.slices.template;
-            sliceTemplate1.cornerRadius = 5;
-            sliceTemplate1.draggable = false;
-            sliceTemplate1.inert = true;
-            sliceTemplate1.propertyFields.fill = "color";
-            sliceTemplate1.propertyFields.fillOpacity = "opacity";
-            sliceTemplate1.propertyFields.stroke = "color";
-            sliceTemplate1.propertyFields.strokeDasharray = "strokeDasharray";
-            sliceTemplate1.strokeWidth = 1;
-            sliceTemplate1.strokeOpacity = 1;
-
-            var zIndex = 5;
-
-            sliceTemplate1.events.on("down", function (event) {
-                event.target.toFront();
-                // also put chart to front
-                var series = event.target.dataItem.component;
-                series.chart.zIndex = zIndex++;
-            })
-
-            series1.ticks.template.disabled = true;
-
-            sliceTemplate1.states.getKey("active").properties.shiftRadius = 0;
-
-            sliceTemplate1.events.on("dragstop", function (event) {
-                handleDragStop(event);
-            })
-            // Add data
-  
-
             // Add and configure Series
-    
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "total";
+            pieSeries.dataFields.category = "section";
+
+            // Let's cut a hole in our Pie chart the size of 40% the radius
+            chart.innerRadius = am4core.percent(40);
+
+            // Put a thick white border around each Slice
+            pieSeries.slices.template.stroke = am4core.color("#7413dc");
+            pieSeries.slices.template.strokeWidth = 2;
+            pieSeries.slices.template.strokeOpacity = 1;
+            pieSeries.slices.template.propertyFields.fill = "color";
+       
+            chart.legend = new am4charts.Legend();
 
 
         }); // end am4core.ready()
         var sectionChange = document.getElementById("sectionChange");
         function changeSection() {
             var section = document.getElementById("section").value;
-            var title = document.getElementById("genderTitle").innerHTML="Numbers of Young People in "+ section;;
+            var title = document.getElementById("genderTitle").innerHTML = "Numbers of Young People in " + section;;
             console.log(title)
             var chart = am4core.create("gendiv", am4charts.PieChart);
             if (section == "Beavers") {
@@ -195,7 +151,7 @@
                     "total": 400,
                     "color": am4core.color("#003982"),
                 }];
-            } else if(section="Cubs") {
+            } else if (section = "Cubs") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
                 // Add data
                 chart.data = [{
@@ -213,7 +169,7 @@
 
                 }];
             }
-            else if(section="Scouts") {
+            else if (section = "Scouts") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
                 // Add data
                 chart.data = [{
@@ -230,7 +186,7 @@
                     "color": am4core.color("#003982"),
 
                 }];
-            }else if(section="Explorers") {
+            } else if (section = "Explorers") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
                 // Add data
                 chart.data = [{
@@ -247,7 +203,7 @@
                     "color": am4core.color("#003982"),
 
                 }];
-            }else if(section="Network") {
+            } else if (section = "Network") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
                 // Add data
                 chart.data = [{
@@ -286,9 +242,9 @@
     </script>
 
     <!-- HTML -->
-    
-    
-   
+
+
+
 
 
 </body>
