@@ -13,6 +13,8 @@
 <script src="https://cdn.amcharts.com/lib/4/lang/de_DE.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/geodata/germanyLow.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/fonts/notosans-sc.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
 <style>
     html,
     body,
@@ -34,49 +36,49 @@
         width: 100%;
         height: 500px;
     }
+    #incomediv {
+        width: 100%;
+        height: 500px;
+    }
 </style>
 
 <body>
-    <div class="w3-container  w3-center w3-margin-top w3-card-4">
-        <h1>Data Visualisation Examples</h1>
-    </div>
-    <div class="w3-container  w3-center w3-margin-top w3-card-4">
-        <h1 class="w3-blue">Numbers of Young people in each section</h1>
-        <div id="chartdiv">
+    <div class="w3-content w3-margin-top" style="max-width:1600px;">
+
+        <div class="w3-container  w3-center w3-margin-top w3-card-4">
+            <h1>Data Visualisation Examples</h1>
+        </div>
+        <div class="w3-container  w3-center w3-margin-top w3-card-4">
+            <h1 class="w3-blue">Numbers of Young people in each section</h1>
+            <div id="chartdiv">
 
 
 
+            </div>
+        </div>
+       
+        <div class="w3-container  w3-center w3-margin-top w3-card-4">
+            <h1 id="genderTitle" class="w3-blue">Numbers of Young people Beavers </h1>
+
+            <div class=" " id="gendiv"></div>
+            <div class="w3-blue">
+                <select id="section" name="section">
+                    <option value="Beavers">Beavers</option>
+                    <option value="Cubs">Cubs</option>
+                    <option value="Scouts">Scouts</option>
+                    <option value="Explorers">Explorers</option>
+                    <option value="Network">Network</option>
+                </select>
+                <button id="sectionChange" onclick="changeSection()">update</button>
+            </div>
+        </div>
+        
+        <div class="w3-container  w3-center w3-margin-top w3-card-4">
+            <h1 id="incomeTitle" class="w3-blue">Scout Association Income in 2019/20</h1>
+            <div id="incomediv"></div>
+         
         </div>
     </div>
-    <div class="w3-container  w3-center w3-margin-top w3-card-4">
-        <h1 id="genderTitle" class="w3-blue">Numbers of Young people Beavers </h1>
-
-        <div class=" " id="gendiv"></div>
-        <div class="w3-blue">
-            <select id="section" name="section">
-                <option value="Beavers">Beavers</option>
-                <option value="Cubs">Cubs</option>
-                <option value="Scouts">Scouts</option>
-                <option value="Explorers">Explorers</option>
-                <option value="Network">Network</option>
-            </select>
-            <button id="sectionChange" onclick="changeSection()">update</button>
-        </div>
-    </div>
-
-    </div>
-    <!-- Styles -->
-    <style>
-        #chartdiv {
-            width: 100%;
-            height: 500px;
-        }
-    </style>
-
-    <!-- Resources -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
     <!-- Chart code -->
     <script>
@@ -86,6 +88,7 @@
             am4core.useTheme(am4themes_animated);
             // Themes end
             changeSection();
+            income();
             var chart = am4core.create("chartdiv", am4charts.PieChart);
             chart.data = [{
                 "section": "Beavers",
@@ -126,11 +129,83 @@
             pieSeries.slices.template.strokeWidth = 2;
             pieSeries.slices.template.strokeOpacity = 1;
             pieSeries.slices.template.propertyFields.fill = "color";
-       
+
             chart.legend = new am4charts.Legend();
 
 
         }); // end am4core.ready()
+
+        function income() {
+
+
+            // Create chart instance
+            var chart = am4core.create("incomediv", am4charts.XYChart);
+
+            // Add data
+            chart.data = [{
+                "category": "Donations and Legacies",
+                "income": 14224000,
+                "expenses": 328000
+            }, {
+                "category": "Charitable Activities",
+                "income": 24756000,
+                "expenses": 45980000
+            }, {
+                "category": "Trading",
+                "income": 12806000,
+                "expenses": 8540000
+            }, {
+                "category": "investments",
+                "income": 712000,
+                "expenses": 0
+            }, {
+                "category": "other",
+                "income": 1044000,
+                "expenses": 0
+            }];
+
+            // Create axes
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.numberFormatter.numberFormat = "#";
+            categoryAxis.renderer.inversed = true;
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.cellStartLocation = 0.1;
+            categoryAxis.renderer.cellEndLocation = 0.9;
+
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.opposite = true;
+
+            // Create series
+            function createSeries(field, name) {
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = field;
+                series.dataFields.categoryY = "category";
+                series.name = name;
+                series.columns.template.tooltipText = "{name}: [bold]{valueX}[/]";
+                series.columns.template.height = am4core.percent(100);
+                series.sequencedInterpolation = true;
+
+                var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+                valueLabel.label.text = "{valueX}";
+                valueLabel.label.horizontalCenter = "left";
+                valueLabel.label.dx = 10;
+                valueLabel.label.hideOversized = false;
+                valueLabel.label.truncate = false;
+
+                var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
+                categoryLabel.label.text = "{name}";
+                categoryLabel.label.horizontalCenter = "right";
+                categoryLabel.label.dx = -10;
+                categoryLabel.label.fill = am4core.color("#fff");
+                categoryLabel.label.hideOversized = false;
+                categoryLabel.label.truncate = false;
+            }
+
+            createSeries("income", "Income");
+            createSeries("expenses", "Expenses");
+
+        }
         var sectionChange = document.getElementById("sectionChange");
         function changeSection() {
             var section = document.getElementById("section").value;
@@ -237,11 +312,12 @@
             pieSeries.hiddenState.properties.opacity = 1;
             pieSeries.hiddenState.properties.endAngle = -90;
             pieSeries.hiddenState.properties.startAngle = -90;
+            chart.legend = new am4charts.Legend();
+
         }
 
     </script>
 
-    <!-- HTML -->
 
 
 
