@@ -92,3 +92,36 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto", sans-serif
+}
+
+#chartdiv {
+    width: 100%;
+    height: 500px;
+}
+
+#gendiv {
+    width: 100%;
+    height: 500px;
+}
+
+#incomediv {
+    width: 100%;
+    height: 500px;
+}
+#grantdiv {
+  width: 100%;
+  height: 500px;
+}
+#expdiv {
+  width: 100%;
+  height: 500px;
+}

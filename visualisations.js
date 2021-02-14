@@ -4,6 +4,114 @@ am4core.ready(function () {
     // Themes end
     changeSection();
     income();
+    grants();
+    sections();
+    expendature();
+    
+}); 
+function expendature(){
+    /* Create chart */
+var chart = am4core.create("expdiv", am4charts.TreeMap);
+chart.data = [{
+  "name": "Trading Activities",
+  "children": [
+    {
+      "name": "Retail Operating Costs","value":6749000
+    },{
+      "name": "Hostel and Conferece Expendature","value":1441000
+    },{
+      "name": "Sponsorship, Promotion and Royalties","value":350000
+    }
+    
+  ]
+}, {
+  "name": "Charitable Activities",
+  "children": [
+    {
+      "name": "Youth Programme",
+      "children": [
+        { "name": "Direct", "value": 9406000 },
+        { "name": "Grant Funding", "value": 182000 },
+        { "name": "Support Costs", "value": 1925000 },
+      ]
+    },
+    {
+      "name": "Development Of Scouting",
+      "children": [
+        { "name": "Direct", "value": 9112000 },
+        { "name": "Grant Funding", "value": 183000 },
+        { "name": "Support Costs", "value": 2792000 },
+      ]
+    },
+    {
+      "name": "Adult Support and Services to Members",
+      "children": [
+        { "name": "Direct", "value": 8232000 },
+        { "name": "Grant Funding", "value": 183000 },
+        { "name": "Support Costs", "value": 1828000 },
+      ]
+    },{
+      "name": "Support and Training",
+      "children": [
+        { "name": "Direct", "value": 9452000 },
+        { "name": "Grant Funding", "value": 182000 },
+        { "name": "Support Costs", "value": 2503000 },
+      ]
+    },
+  ]
+},{
+  "name": "Staffing Costs",
+  "children": [
+    {
+      "name": "Wages and Salaries", "value":12278000
+    },{
+      "name": "Social Security Costs", "value":1185000
+    },{
+      "name": "Defined Contribution Pension Costs", "value":791000
+    },{
+      "name": "Other Pension Costs", "value":47000
+    },
+  ]
+}];
+
+chart.maxLevels = 1;
+
+/* Set color step */
+chart.colors.step = 2;
+
+/* Define data fields */
+chart.dataFields.value = "value";
+chart.dataFields.name = "name";
+chart.dataFields.children = "children";
+chart.numberFormatter.numberFormat="'£' #,###";
+
+var level1 = chart.seriesTemplates.create("0");
+var level1_bullet = level1.bullets.push(new am4charts.LabelBullet());
+level1_bullet.locationY = 0.5;
+level1_bullet.locationX = 0.5;
+level1_bullet.label.text = "{name}";
+level1_bullet.label.fill = am4core.color("#fff");
+
+var level2 = chart.seriesTemplates.create("1");
+var level2_bullet = level2.bullets.push(new am4charts.LabelBullet());
+level2_bullet.locationY = 0.5;
+level2_bullet.locationX = 0.5;
+level2_bullet.label.text = "{name}";
+level2_bullet.label.fill = am4core.color("#fff");
+
+var level3 = chart.seriesTemplates.create("2");
+var level3_bullet = level3.bullets.push(new am4charts.LabelBullet());
+level3_bullet.locationY = 0.5;
+level3_bullet.locationX = 0.5;
+level3_bullet.label.text = "{name}";
+level3_bullet.label.fill = am4core.color("#fff");
+
+/* Navigation bar */
+chart.homeText = "Scout Association Expendature 2019/20";
+chart.navigationBar = new am4charts.NavigationBar();
+  
+}
+function sections(){
     var chart = am4core.create("chartdiv", am4charts.PieChart);
     chart.data = [{
         "section": "Beavers",
@@ -42,7 +150,7 @@ am4core.ready(function () {
     pieSeries.slices.template.propertyFields.fill = "color";
 
     chart.legend = new am4charts.Legend();
-}); 
+}
 
 function income() {
     // Create chart instance
@@ -215,3 +323,91 @@ function changeSection() {
     pieSeries.hiddenState.properties.startAngle = -90;
     chart.legend = new am4charts.Legend();
 }
+function grants() {
+    // Create chart instance
+    var chart = am4core.create("grantdiv", am4charts.RadarChart);
+
+    // Add data
+    chart.data = [{
+
+      "category": "Other",
+      "value": 36000,
+      "full": 730000
+    }, {
+      "category": "International Fund",
+      "value": 26000,
+      "full": 730000
+    }, {
+      "category": "Benevolent Fund",
+      "value": 26000,
+      "full": 730000
+    }, {
+      "category": "King Georde VI Leadership Fund",
+      "value": 37000,
+      "full": 730000
+    }, {
+      "category": "Development",
+      "value": 71000,
+      "full": 730000
+    }, {
+      "category": "Admiralty Fund and Trinity House Fund",
+      "value": 250000,
+      "full": 730000
+    }, {
+      "category": "Grants from Legacies to Local Scout Groups",
+      "value": 284000,
+      "full": 730000
+    }];
+
+    // Make chart not full circle
+    chart.startAngle = -90;
+    chart.endAngle = 180;
+    chart.innerRadius = am4core.percent(20);
+
+    // Set number format
+    chart.numberFormatter.numberFormat = "'£'#,###";
+
+    // Create axes
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "category";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.grid.template.strokeOpacity = 0;
+    categoryAxis.renderer.labels.template.horizontalCenter = "right";
+    categoryAxis.renderer.labels.template.fontWeight = 500;
+    categoryAxis.renderer.labels.template.adapter.add("fill", function (fill, target) {
+      return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
+    });
+    categoryAxis.renderer.minGridDistance = 10;
+
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.renderer.grid.template.strokeOpacity = 0;
+    valueAxis.min = 0;
+    valueAxis.max = 300000;
+    valueAxis.strictMinMax = true;
+
+    // Create series
+    var series1 = chart.series.push(new am4charts.RadarColumnSeries());
+    series1.dataFields.valueX = "full";
+    series1.dataFields.categoryY = "category";
+    series1.clustered = false;
+    series1.columns.template.fill = new am4core.InterfaceColorSet().getFor("alternativeBackground");
+    series1.columns.template.fillOpacity = 0.08;
+    series1.columns.template.cornerRadiusTopLeft = 20;
+    series1.columns.template.strokeWidth = 0;
+    series1.columns.template.radarColumn.cornerRadius = 20;
+
+    var series2 = chart.series.push(new am4charts.RadarColumnSeries());
+    series2.dataFields.valueX = "value";
+    series2.dataFields.categoryY = "category";
+    series2.clustered = false;
+    series2.columns.template.strokeWidth = 0;
+    series2.columns.template.tooltipText = "{category}: [bold]{value}[/]";
+    series2.columns.template.radarColumn.cornerRadius = 20;
+
+    series2.columns.template.adapter.add("fill", function (fill, target) {
+      return chart.colors.getIndex(target.dataItem.index);
+    });
+
+    // Add cursor
+    chart.cursor = new am4charts.RadarCursor();
+  }
