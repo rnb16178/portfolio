@@ -134,12 +134,12 @@ input[type=date] {
 }
 
 
-.topnav {
+.topnavappt {
   overflow: hidden;
   background-color: #333;
 }
 
-.topnav button {
+.topnavappt button {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -156,11 +156,11 @@ input[type=date] {
   color: white;
 }
 
-.topnav .icon {
+.topnavappt .icon {
   display: none;
 }
 
-.topnav button:hover,
+.topnavappt button:hover,
 .dropdown:hover .dropbtn {
   background-color: #555;
   color: white;
@@ -176,43 +176,43 @@ input[type=date] {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav button:not(:first-child),
+  .topnavappt button:not(:first-child),
   .dropdown .dropbtn {
     display: none;
   }
 
-  .topnav button.icon {
+  .topnavappt button.icon {
     float: right;
     display: block;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .topnav.responsive {
+  .topnavappt.responsive {
     position: relative;
   }
 
-  .topnav.responsive .icon {
+  .topnavappt.responsive .icon {
     position: absolute;
     right: 0;
     top: 0;
   }
 
-  .topnav.responsive button {
+  .topnavappt.responsive button {
     float: none;
     display: block;
     text-align: left;
   }
 
-  .topnav.responsive .dropdown {
+  .topnavappt.responsive .dropdown {
     float: none;
   }
 
-  .topnav.responsive .dropdown-content {
+  .topnavappt.responsive .dropdown-content {
     position: relative;
   }
 
-  .topnav.responsive .dropdown .dropbtn {
+  .topnavappt.responsive .dropdown .dropbtn {
     display: block;
     width: 100%;
     text-align: left;

@@ -546,10 +546,10 @@ function save() {
 }
 
 function openTopnav() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
+    var x = document.getElementById("myTopnavappt");
+    if (x.className === "topnavappt") {
         x.className += " responsive";
     } else {
-        x.className = "topnav";
+        x.className = "topnavappt";
     }
 }

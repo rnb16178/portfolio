@@ -7,6 +7,8 @@
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="menu.css">
+
 <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
@@ -14,6 +16,7 @@
 <script src="https://cdn.amcharts.com/lib/4/geodata/germanyLow.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/fonts/notosans-sc.js"></script>
 <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="menu.js"></script>
 
 <style>
     html,
@@ -36,47 +39,68 @@
         width: 100%;
         height: 500px;
     }
+
     #incomediv {
         width: 100%;
         height: 500px;
     }
+
+   
+
 </style>
 
 <body>
     <div class="w3-content w3-margin-top" style="max-width:1600px;">
-
+        <div class="w3-container w3-blue w3-center w3-margin-top w3-card-4">
+            <h1>Ross McMillan - Front End Developer</h1>
+        </div>
+        <div class="topnav" id=navigationMenu>
+            <a href="index.html">Home</a>
+            <a href="cv.html">CV</a>
+            <a href="contact.html">Contact</a>
+            <div class="dropdown">
+                <button class="dropbtn">Portfolio
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="appointment.html">Appointments App</a>
+                    <a href="visualisations.html">Data Visulasation</a>
+                    <a href="jsg/index.html">Scouts Website</a>
+                </div>
+            </div>
+            <a href="#about">About</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menuClick()"><span
+                    class=" fa fa-bars"></span></a>
+        </div>
+        
         <div class="w3-container  w3-center w3-margin-top w3-card-4">
             <h1>Data Visualisation Examples</h1>
         </div>
-        <div class="w3-container  w3-center w3-margin-top w3-card-4">
+        <div class="w3-container  w3-center w3-margin-top w3-card-4 w3-half">
             <h1 class="w3-blue">Numbers of Young people in each section</h1>
-            <div id="chartdiv">
-
-
-
-            </div>
+            <div id="chartdiv"></div>
         </div>
-       
-        <div class="w3-container  w3-center w3-margin-top w3-card-4">
-            <h1 id="genderTitle" class="w3-blue">Numbers of Young people Beavers </h1>
 
-            <div class=" " id="gendiv"></div>
-            <div class="w3-blue">
-                <select id="section" name="section">
+        <div class="w3-container  w3-center w3-margin-top w3-card-4 w3-half">
+            <h1 id="genderTitle" class="w3-blue">Numbers of Young people in   
+                <select id="section" class="section" name="section" onchange="changeSection()">
                     <option value="Beavers">Beavers</option>
                     <option value="Cubs">Cubs</option>
                     <option value="Scouts">Scouts</option>
                     <option value="Explorers">Explorers</option>
                     <option value="Network">Network</option>
                 </select>
-                <button id="sectionChange" onclick="changeSection()">update</button>
-            </div>
+                
+            </h1>
+
+            <div class=" " id="gendiv"></div>
+       
         </div>
 
         <div class="w3-container  w3-center w3-margin-top w3-card-4">
             <h1 id="incomeTitle" class="w3-blue">Scout Association Income in 2019/20</h1>
             <div id="incomediv"></div>
-         
+
         </div>
     </div>
 
@@ -136,11 +160,8 @@
         }); // end am4core.ready()
 
         function income() {
-
-
             // Create chart instance
             var chart = am4core.create("incomediv", am4charts.XYChart);
-
             // Add data
             chart.data = [{
                 "category": "Donations and Legacies",
@@ -204,29 +225,31 @@
 
             createSeries("income", "Income");
             createSeries("expenses", "Expenses");
-
         }
-        var sectionChange = document.getElementById("sectionChange");
+
         function changeSection() {
+            //find what section is to be viewed and change the title accordingly
             var section = document.getElementById("section").value;
-            var title = document.getElementById("genderTitle").innerHTML = "Numbers of Young People in " + section;;
-            console.log(title)
+
+            //create chart instance
             var chart = am4core.create("gendiv", am4charts.PieChart);
+
+            //get the section data
             if (section == "Beavers") {
                 chart.data = [{
                     "gender": "male",
                     "total": 100997,
-                    "color": am4core.color("#0000ff"),
+                    "color": am4core.color("#6ca0dc"),
                 }, {
                     "gender": "female",
                     "total": 25633,
-                    "color": am4core.color("#ffc0cb"),
+                    "color": am4core.color("#f8b9d4"),
                 }, {
                     "gender": "other",
                     "total": 400,
                     "color": am4core.color("#003982"),
                 }];
-            } else if (section = "Cubs") {
+            } else if (section == "Cubs") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
                 // Add data
                 chart.data = [{
@@ -244,9 +267,8 @@
 
                 }];
             }
-            else if (section = "Scouts") {
+            else if (section == "Scouts") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
-                // Add data
                 chart.data = [{
                     "gender": "male",
                     "total": 96995,
@@ -259,11 +281,9 @@
                     "gender": "other",
                     "total": (34 + 395),
                     "color": am4core.color("#003982"),
-
                 }];
-            } else if (section = "Explorers") {
+            } else if (section == "Explorers") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
-                // Add data
                 chart.data = [{
                     "gender": "male",
                     "total": 30489,
@@ -276,30 +296,26 @@
                     "gender": "other",
                     "total": (61 + 162),
                     "color": am4core.color("#003982"),
-
                 }];
-            } else if (section = "Network") {
+            } else if (section == "Network") {
                 var chart = am4core.create("gendiv", am4charts.PieChart);
-                // Add data
                 chart.data = [{
                     "gender": "male",
                     "total": 10409,
                     "color": am4core.color("#6ca0dc"),
                 }, {
                     "gender": "female",
-                    "total": 15195,
+                    "total": 5892,
                     "color": am4core.color("#f8b9d4"),
                 }, {
                     "gender": "other",
-                    "total": (8 + 192),
+                    "total": (200),
                     "color": am4core.color("#003982"),
-
                 }];
             }
 
             // Add and configure Series
             var pieSeries = chart.series.push(new am4charts.PieSeries());
-
             pieSeries.dataFields.value = "total";
             pieSeries.dataFields.category = "gender";
             pieSeries.slices.template.stroke = am4core.color("#fff");
@@ -313,16 +329,8 @@
             pieSeries.hiddenState.properties.endAngle = -90;
             pieSeries.hiddenState.properties.startAngle = -90;
             chart.legend = new am4charts.Legend();
-
         }
-
     </script>
-
-
-
-
-
-
 </body>
 
 </html>
