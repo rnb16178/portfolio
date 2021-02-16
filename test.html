@@ -1,0 +1,137 @@
+<!-- Styles -->
+<style>
+  #chartdiv {
+    width: 100%;
+    height: 500px;
+  }
+  </style>
+  
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/frozen.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+<script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+<div id="chartdiv"></div>
+  
+  <!-- Chart code -->
+  <script>
+  am4core.ready(function() {
+/**
+ * ---------------------------------------
+ * This demo was created using amCharts 4.
+ *
+ * For more information visit:
+ * https://www.amcharts.com/
+ *
+ * Documentation is available at:
+ * https://www.amcharts.com/docs/v4/
+ * ---------------------------------------
+ */
+
+/* Create chart */
+var chart = am4core.create("chartdiv", am4charts.TreeMap);
+chart.data = [{
+  "name": "Trading Activities",
+  "children": [
+    {
+      "name": "Retail Operating Costs","value":6749000
+    },{
+      "name": "Hostel and Conferece Expendature","value":1441000
+    },{
+      "name": "Sponsorship, Promotion and Royalties","value":350000
+    }
+    
+  ]
+}, {
+  "name": "Charitable Activities",
+  "children": [
+    {
+      "name": "Youth Programme",
+      "children": [
+        { "name": "Direct", "value": 9406000 },
+        { "name": "Grant Funding", "value": 182000 },
+        { "name": "Support Costs", "value": 1925000 },
+      ]
+    },
+    {
+      "name": "Development Of Scouting",
+      "children": [
+        { "name": "Direct", "value": 9112000 },
+        { "name": "Grant Funding", "value": 183000 },
+        { "name": "Support Costs", "value": 2792000 },
+      ]
+    },
+    {
+      "name": "Adult Support and Services to Members",
+      "children": [
+        { "name": "Direct", "value": 8232000 },
+        { "name": "Grant Funding", "value": 183000 },
+        { "name": "Support Costs", "value": 1828000 },
+      ]
+    },{
+      "name": "Support and Training",
+      "children": [
+        { "name": "Direct", "value": 9452000 },
+        { "name": "Grant Funding", "value": 182000 },
+        { "name": "Support Costs", "value": 2503000 },
+      ]
+    },
+  ]
+},{
+  "name": "Staffing Costs",
+  "children": [
+    {
+      "name": "Wages and Salaries", "value":12278000
+    },{
+      "name": "Social Security Costs", "value":1185000
+    },{
+      "name": "Defined Contribution Pension Costs", "value":791000
+    },{
+      "name": "Wages and Salaries", "value":47000
+    },
+  ]
+}];
+
+chart.maxLevels = 1;
+
+/* Set color step */
+chart.colors.step = 2;
+
+/* Define data fields */
+chart.dataFields.value = "value";
+chart.dataFields.name = "name";
+chart.dataFields.children = "children";
+chart.numberFormatter.numberFormat="'£' #,###";
+
+var level1 = chart.seriesTemplates.create("0");
+var level1_bullet = level1.bullets.push(new am4charts.LabelBullet());
+level1_bullet.locationY = 0.5;
+level1_bullet.locationX = 0.5;
+level1_bullet.label.text = "{name}";
+level1_bullet.label.fill = am4core.color("#fff");
+
+var level2 = chart.seriesTemplates.create("1");
+var level2_bullet = level2.bullets.push(new am4charts.LabelBullet());
+level2_bullet.locationY = 0.5;
+level2_bullet.locationX = 0.5;
+level2_bullet.label.text = "{name}";
+level2_bullet.label.fill = am4core.color("#fff");
+
+var level3 = chart.seriesTemplates.create("2");
+var level3_bullet = level3.bullets.push(new am4charts.LabelBullet());
+level3_bullet.locationY = 0.5;
+level3_bullet.locationX = 0.5;
+level3_bullet.label.text = "{name}";
+level3_bullet.label.fill = am4core.color("#fff");
+
+/* Navigation bar */
+chart.homeText = "Scout Association Expendature 2019/20";
+chart.navigationBar = new am4charts.NavigationBar();
+  
+  }); // end am4core.ready()
+  </script>
+  
+  <!-- HTML -->
+  <div id="chartdiv"></div>
